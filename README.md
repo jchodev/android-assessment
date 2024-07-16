@@ -1,2 +1,2 @@
 # android-assessment
-This is balck project for assessment
+This is blank project for assessment
