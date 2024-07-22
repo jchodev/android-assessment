@@ -1,12 +1,10 @@
 package com.jerry.assessment.compose.player
 
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.jerry.assessment.MockStubs
 import com.jerry.assessment.contants.TEST_TAG_PLAYBACK_BAR_ERROR
-import com.jerry.assessment.contants.TEST_TAG_TITLE
 import com.jerry.assessment.data.toEpisode
 import com.jerry.assessment.data.toPodcast
 import com.jerry.assessment.ui.theme.AssessmentprojectTheme

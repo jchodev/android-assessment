@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.jerry.assessment.compose.PodcastList
 import com.jerry.assessment.compose.player.EpisodePlayerScreen
 import com.jerry.assessment.compose.podcastdetail.PodcastDetailScreen
 import com.jerry.assessment.compose.podcastlist.PodcastListScreen
@@ -27,10 +26,10 @@ fun AssessmentNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = PodcastList
+        startDestination = "PodcastList"
     ) {
 
-        composable<PodcastList> {
+        composable(route = "PodcastList"){
             PodcastListScreen(
                 onPodcastClick = {
                     navController.navigate(it)
