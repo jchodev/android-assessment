@@ -2,4 +2,12 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
+
+
+    alias(libs.plugins.ksp).apply(false)
+    alias(libs.plugins.hilt) apply false
+
+    kotlin("plugin.serialization") version "1.8.0"
+    alias(libs.plugins.compose.compiler) apply false
+
 }
