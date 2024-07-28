@@ -1,9 +1,17 @@
 package com.jerry.assessment.di
 
+import android.app.NotificationManager
+import android.content.ComponentName
 import android.content.Context
+import androidx.media3.session.MediaSession
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.session.MediaController
+import androidx.media3.session.SessionToken
+import com.google.common.util.concurrent.ListenableFuture
 import com.jerry.assessment.BuildConfig
 import com.jerry.assessment.contants.TIME_OUT
+import com.jerry.assessment.manager.MediaNotificationManager
+import com.jerry.assessment.service.PlaybackService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -88,4 +96,47 @@ internal object NetworkModule {
     fun provideExoPlayer(@ApplicationContext context: Context): ExoPlayer {
         return ExoPlayer.Builder(context).build()
     }
+
+    @Singleton
+    @Provides
+    fun provideMediaSession(@ApplicationContext context: Context, player: ExoPlayer): MediaSession {
+        return MediaSession.Builder(context, player).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSessionToken(@ApplicationContext context: Context): SessionToken {
+        return SessionToken(context, ComponentName(context, PlaybackService::class.java))
+        //return SessionToken(context, ComponentName(context, SimplePlaybackService::class.java))
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideMediaControllerFuture(@ApplicationContext context: Context, sessionToken: SessionToken): ListenableFuture<MediaController> {
+        return MediaController.Builder(context, sessionToken).buildAsync()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationManager(@ApplicationContext context: Context, player: ExoPlayer): NotificationManager {
+        return context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    }
+
+//
+//
+//    @Singleton
+//    @Provides
+//    fun provideMediaNotificationManager(
+//        @ApplicationContext context: Context,
+//        player: ExoPlayer,
+//        mediaSession: MediaSession
+//    ): MediaNotificationManager {
+//        return MediaNotificationManager(
+//            context = context,
+//            sessionToken = mediaSession.token,
+//            player = player,
+//
+//        )
+//    }
 }

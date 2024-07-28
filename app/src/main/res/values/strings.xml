@@ -18,4 +18,8 @@
     <string name="error">Error</string>
     <string name="error_with">Error: %1$s</string>
     <string name="refresh">Refresh</string>
+
+    <string name="media_notification_channel">Channel 1</string>
+    <string name="media_notification_title">Channel Title</string>
+    <string name="media_notification_channel_description">Channel Description</string>
 </resources>
