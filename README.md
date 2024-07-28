@@ -6,7 +6,7 @@ It follows the basic project structure established by the official Android app  
 ## Screen Flow:
 ![image](https://github.com/user-attachments/assets/04598a94-97ed-4435-9b9d-d9a4b4e13969)
 
-## Media Player on Quick settings
+## Media Player near Quick settings
 ![image](https://github.com/user-attachments/assets/daaeaebc-eb5a-4508-a91a-66bf7e57c427)
 
 
