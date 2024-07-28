@@ -6,6 +6,10 @@ It follows the basic project structure established by the official Android app  
 ## Screen Flow:
 ![image](https://github.com/user-attachments/assets/04598a94-97ed-4435-9b9d-d9a4b4e13969)
 
+## Media Player on Quick settings
+![image](https://github.com/user-attachments/assets/daaeaebc-eb5a-4508-a91a-66bf7e57c427)
+
+
 ## Libraries 
 | Library           | Used For                  | Remark |
 |-------------------|---------------------------| ------ |
@@ -38,4 +42,5 @@ https://github.com/user-attachments/assets/fcb6e508-67af-4ef5-9324-397767b93a18
 4. Support switch theme
 5. Implement [Automate UI tests](https://developer.android.com/training/testing/instrumented-tests/ui-tests) 
 6. Implement [Firebase Crashlyics](https://firebase.google.com/docs/crashlytics)
-7. ...
+7. test (unit test and ui test) - Media Player on Quick settings
+8. ...
