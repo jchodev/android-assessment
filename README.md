@@ -24,7 +24,8 @@ It follows the basic project structure established by the official Android app  
 |   [media3](https://developer.android.com/media/media3)            | Media player           | ----| 
 
 ## project demo
-https://github.com/user-attachments/assets/208dc923-f621-429c-8369-d35fcd56c4a2
+https://github.com/user-attachments/assets/82300dde-fce0-4cb3-b64d-ffcae32fc9de
+
 
 ## UI test demo
 https://github.com/user-attachments/assets/fcb6e508-67af-4ef5-9324-397767b93a18
