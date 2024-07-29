@@ -1,10 +1,12 @@
 package com.jerry.assessment.compose.podcastlist
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.jerry.assessment.compose.common.CoilLoadingCompose
+import com.jerry.assessment.compose.common.shimmerEffect
 import com.jerry.assessment.compose.preview.DevicePreviews
 import com.jerry.assessment.data.Podcast
 import com.jerry.assessment.ui.theme.AssessmentprojectTheme
@@ -43,7 +46,13 @@ fun PodcastListItemView(
             contentDescription = podcast.title,
             contentScale = ContentScale.Crop,
             loading = {
-                CoilLoadingCompose()
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                        .clip(MaterialTheme.shapes.small)
+                        .shimmerEffect()
+                )
             },
         )
         Text(
