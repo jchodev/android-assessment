@@ -10,9 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.media3.session.MediaController
-import androidx.media3.session.SessionToken
-import com.google.common.util.concurrent.MoreExecutors
+
 import com.jerry.assessment.compose.AssessmentApp
 import com.jerry.assessment.contants.KEY_EPISODE
 
@@ -42,6 +40,8 @@ class MainActivity : ComponentActivity() {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 123)
             }
         }
+
+
     }
 
 

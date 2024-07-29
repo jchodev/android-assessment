@@ -1,6 +1,7 @@
 package com.jerry.assessment.compose.player
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,6 +36,7 @@ import com.jerry.assessment.compose.common.EpisodeLinerProgressBar
 import com.jerry.assessment.compose.common.ErrorDialog
 import com.jerry.assessment.compose.common.PlaybackStatusButton
 import com.jerry.assessment.compose.preview.DevicePreviews
+import com.jerry.assessment.contants.TEST_TAG_TITLE
 import com.jerry.assessment.data.Episode
 import com.jerry.assessment.ext.toDuration
 import com.jerry.assessment.ui.theme.AssessmentprojectTheme
@@ -49,14 +52,16 @@ fun EpisodePlayerScreen(
     onPlayVideoClick: (Episode) -> Unit,
 ) {
     val state = viewModel.episodePlayerState.collectAsStateWithLifecycle().value
-    val assignedEpisode = viewModel.selectedEpisode.collectAsStateWithLifecycle().value
+
+    val selectedEpisode = viewModel.selectedEpisode.collectAsStateWithLifecycle().value
 
     LaunchedEffect(episode) {
+        //setSelectedEpisode is allow click by Episode Player Bar for display episode content on UI
         viewModel.setSelectedEpisode(episode)
     }
 
     EpisodePlayerScreen(
-        selectedEpisode = assignedEpisode ?: episode,
+        selectedEpisode = selectedEpisode ?: episode,
         episodePlayerState = state,
         onBackClick = onBackClick,
         onPlayPause = {
@@ -88,6 +93,14 @@ fun EpisodePlayerScreen(
                 modifier = Modifier
                     .shadow(elevation = 4.dp),
                 title = selectedEpisode.title,
+                titleCompose = {
+                    Text(
+                        //androidx.compose.foundation:foundation
+                        modifier = Modifier.testTag(TEST_TAG_TITLE).basicMarquee(),
+                        text = selectedEpisode.title,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                },
                 showBack = true,
                 onBackClick = onBackClick
             )

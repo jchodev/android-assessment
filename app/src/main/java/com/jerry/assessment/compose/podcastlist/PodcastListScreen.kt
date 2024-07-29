@@ -88,8 +88,9 @@ fun PodcastListScreen(
             )
 
             if (podcastListState.isLoading) {
-                LoadingCompose()
+                PodcastListLoadingScreen()
             }
+
 
             podcastListState.errorMessage?.let {
                 ErrorDialog(

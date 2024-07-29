@@ -7,24 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.jerry.assessment.compose.navhost.AssessmentNavHost
 
 import com.jerry.assessment.compose.player.EpisodePlayerBar
-import com.jerry.assessment.compose.player.EpisodePlayerScreen
-import com.jerry.assessment.compose.podcastdetail.PodcastDetailScreen
-import com.jerry.assessment.compose.podcastlist.PodcastListScreen
 import com.jerry.assessment.data.Episode
-import com.jerry.assessment.data.EpisodeType
-import com.jerry.assessment.data.Podcast
-import com.jerry.assessment.data.PodcastType
 import com.jerry.assessment.viewmodels.EpisodePlayerViewModel
-import kotlin.reflect.typeOf
-
 
 @Composable
 fun AssessmentApp(
@@ -48,6 +36,7 @@ fun AssessmentApp(
                             if (destination.route == null || !destination.route!!.contains(Episode::class.java.name)) {
                                 navController.navigate(it)
                             } else if (destination.route != null || destination.route!!.contains(Episode::class.java.name)) {
+                                //override the current page episode content
                                 episodePlayerViewModel.setSelectedEpisode(it)
                             }
                         }
