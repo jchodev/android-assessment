@@ -39,9 +39,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 @Composable
-fun YouPlan(
-
-) {
+fun YouPlan() {
 
     val now = Clock.System.now()
     val tz = TimeZone.currentSystemDefault()
@@ -81,8 +79,8 @@ fun YouPlan(
             }
             Spacer(modifier = Modifier.height(8.dp))
             CalendarLazyRow(
-                selectedDay = selectedDay,
-                onSelectDay = {
+                today = today,
+                onScrolledDay = {
                     selectedDay = it
                 }
             )

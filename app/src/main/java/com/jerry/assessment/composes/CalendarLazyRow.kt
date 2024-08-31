@@ -20,23 +20,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 
 @Composable
 fun CalendarLazyRow(
-    selectedDay: LocalDate,
-    onSelectDay: (LocalDate) -> Unit,
+    dates: List<LocalDate> = calendarLocalDates(),
+    today: LocalDate,
+    onScrolledDay: (LocalDate) -> Unit,
 
     selectedBgColor: Color = Color(0xFF7539F5),
     unSelectedBgColor: Color = Color.Transparent,
@@ -47,28 +51,37 @@ fun CalendarLazyRow(
 
     LaunchedEffect(key1 = Unit, block = {
         calendarPagerState.animateScrollToItem(
-            index = calendarLocalDates().indexOf(selectedDay),
+            index = calendarLocalDates().indexOf(today),
             scrollOffset = 0,
         )
     })
+
+    LaunchedEffect(calendarPagerState) {
+        snapshotFlow { calendarPagerState.firstVisibleItemIndex }
+            .distinctUntilChanged()
+            .collect { index ->
+                onScrolledDay(dates[index])
+            }
+    }
+
 
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         state = calendarPagerState,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        items(calendarLocalDates()) { date ->
+        items(dates) { date ->
             Box(
                 modifier = Modifier
                     .width(44.dp)
                     .height(60.dp)
                     .clipToBounds()
                     .background(
-                        color = if (date == selectedDay) selectedBgColor else unSelectedBgColor,
+                        color = if (date == today) selectedBgColor else unSelectedBgColor,
                         shape = RoundedCornerShape(16.dp),
                     )
                     .clickable {
-                        onSelectDay(date)
+                       // selectedDay(date)
                     },
                 contentAlignment = Alignment.Center,
             ) {
@@ -76,24 +89,17 @@ fun CalendarLazyRow(
                     Text(
                         text = date.dayOfMonth.toString(),
                         style = MaterialTheme.typography.labelMedium.copy(
-                            color = if (date == selectedDay) selectedTextColor else unSelectedTextColor,
+                            color = if (date == today) selectedTextColor else unSelectedTextColor,
                         ),
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                     )
                     Text(
                         text = date.dayOfWeek.name.substring(0, 3),
                         style = MaterialTheme.typography.labelMedium.copy(
-                            color = if (date == selectedDay) selectedTextColor else unSelectedTextColor,
+                            color = if (date == today) selectedTextColor else unSelectedTextColor,
                         ),
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                     )
-//                    Text(
-//                        text = date.month.toString(),
-//                        style = MaterialTheme.typography.labelMedium.copy(
-//                            color = if (date == today) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
-//                        ),
-//                        modifier = Modifier.align(Alignment.CenterHorizontally),
-//                    )
                 }
             }
         }
@@ -110,8 +116,8 @@ private fun CalendarPreview() {
     var selectedDay by remember { mutableStateOf(today) }
 
     CalendarLazyRow(
-        selectedDay = today,
-        onSelectDay = {
+        today = today,
+        onScrolledDay =  {
             selectedDay = it
         }
     )
@@ -122,19 +128,39 @@ private fun CalendarPreview() {
  * The last 1 year
  * The next 1 year
  */
+//private fun calendarLocalDates(): List<LocalDate> {
+//    val thisYear = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).year
+//    val lastYear = thisYear - 1
+//    val nextYear = thisYear + 1
+//    val dates = mutableListOf<LocalDate>()
+//    for (i in 0..365) {
+//        dates += LocalDate(thisYear, 1, 1).plus(i, DateTimeUnit.DAY)
+//    }
+//    for (i in 0..365) {
+//        dates += LocalDate(lastYear, 1, 1).plus(i, DateTimeUnit.DAY)
+//    }
+//    for (i in 0..365) {
+//        dates += LocalDate(nextYear, 1, 1).plus(i, DateTimeUnit.DAY)
+//    }
+//    return dates
+//}
+
+/**
+ * LocalDates for List<LocalDate>
+ * From 2 months before today to 6 months after today
+ */
 private fun calendarLocalDates(): List<LocalDate> {
-    val thisYear = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).year
-    val lastYear = thisYear - 1
-    val nextYear = thisYear + 1
+    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    val twoMonthsAgo = today.minus(2, DateTimeUnit.MONTH)
+    val sixMonthsLater = today.plus(6, DateTimeUnit.MONTH)
+
     val dates = mutableListOf<LocalDate>()
-    for (i in 0..365) {
-        dates += LocalDate(thisYear, 1, 1).plus(i, DateTimeUnit.DAY)
+    var currentDate = twoMonthsAgo
+
+    while (currentDate <= sixMonthsLater) {
+        dates.add(currentDate)
+        currentDate = currentDate.plus(1, DateTimeUnit.DAY)
     }
-    for (i in 0..365) {
-        dates += LocalDate(lastYear, 1, 1).plus(i, DateTimeUnit.DAY)
-    }
-    for (i in 0..365) {
-        dates += LocalDate(nextYear, 1, 1).plus(i, DateTimeUnit.DAY)
-    }
+
     return dates
 }
