@@ -21,13 +21,14 @@ import com.jerry.assessment.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoundedCardIcon(
+    onClick: () -> Unit = {},
     icon: @Composable () -> Unit = { }
 ) {
     Card(
         modifier = Modifier
             .padding(8.dp)
             .size(48.dp),
-        onClick = { /*TODO*/ },
+        onClick = onClick,
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp,
         ),
@@ -36,7 +37,7 @@ fun RoundedCardIcon(
             containerColor = Color.White
         ),
 
-        ) {
+    ) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
