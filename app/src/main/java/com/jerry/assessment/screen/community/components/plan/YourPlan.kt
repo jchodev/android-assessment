@@ -1,4 +1,4 @@
-package com.jerry.assessment.composes
+package com.jerry.assessment.screen.community.components.plan
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,14 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,13 +30,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jerry.assessment.composes.CalendarLazyRow
+import com.jerry.assessment.composes.card.CommonCardContainer
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 @Composable
-fun YouPlan() {
+fun YourPlan() {
 
     val now = Clock.System.now()
     val tz = TimeZone.currentSystemDefault()
@@ -47,17 +46,7 @@ fun YouPlan() {
 
     var selectedDay by remember { mutableStateOf(today) }
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 8.dp,
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        shape = RoundedCornerShape(16.dp)
-
-    ) {
+   CommonCardContainer {
         Column(modifier = Modifier.padding(12.dp)) {
             //row
             Row( modifier = Modifier.fillMaxWidth()){
@@ -91,8 +80,9 @@ fun YouPlan() {
                 Text("Upcoming Plan",fontWeight = FontWeight.Medium)
                 Spacer(modifier = Modifier.weight(1f))
                 Row (
-                    modifier = Modifier.padding(vertical = 8.dp)
-                        .clickable{},
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .clickable {},
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text("View All", color = Color(0xFF69718A))
@@ -142,6 +132,6 @@ private fun YourPlanPreview(){
         .background(Color.Gray)
         .padding(16.dp))
     {
-        YouPlan()
+        YourPlan()
     }
 }
