@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.jerry.assessment.R
 import com.jerry.assessment.composes.avatar.AvatarGroup
+import com.jerry.assessment.composes.avatar.AvatarGroup2
 import com.jerry.assessment.composes.button.DoubleBorderIconButton
 import com.jerry.assessment.composes.card.DoubleBoarderCard
 
@@ -90,7 +91,7 @@ fun ToGetContent(
             color = Color.Black
         )
 
-        AvatarGroup(
+        AvatarGroup2(
             modifier = Modifier
                 .constrainAs(avatarGroup){
                     top.linkTo(moneyText.bottom, 8.dp)

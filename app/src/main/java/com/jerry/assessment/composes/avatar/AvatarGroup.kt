@@ -2,11 +2,14 @@ package com.jerry.assessment.composes.avatar
 
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -58,10 +61,54 @@ fun AvatarGroup(
     }
 }
 
+@Composable
+fun AvatarGroup2(
+    avatarSize: Dp = 36.dp,
+    modifier: Modifier = Modifier,
+    avatars: List<String>
+){
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy((-24).dp),
+    ) {
+        items(avatars) {
+            SubcomposeAsyncImage(
+                modifier = Modifier
+                    .size(avatarSize)
+                    //.align(Alignment.CenterEnd)
+                    //.offset(x = -offsetX * index)
+                    .clip(CircleShape)
+                    .border(1.dp, Color.White, CircleShape),
+                    //.zIndex(displayAvatars.size.toFloat() - index),
+                model = it,
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
+                loading = {
+                   CircularProgressIndicator()
+                },
+            )
+        }
+    }
+}
+
 @Preview
 @Composable
 private fun AvatarGroupPreview(){
     AvatarGroup(
+        avatars = listOf(
+            "https://dummyimage.com/100x100/6699cc/000",
+            "https://dummyimage.com/100x100/6699cc/000",
+            "https://dummyimage.com/100x100/6699cc/000",
+            "https://dummyimage.com/100x100/6699cc/000",
+            "https://dummyimage.com/100x100/6699cc/000",
+        )
+    )
+}
+
+@Preview
+@Composable
+private fun AvatarGroup2Preview(){
+    AvatarGroup2(
         avatars = listOf(
             "https://dummyimage.com/100x100/6699cc/000",
             "https://dummyimage.com/100x100/6699cc/000",

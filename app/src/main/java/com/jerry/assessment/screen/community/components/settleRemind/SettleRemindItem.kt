@@ -1,0 +1,152 @@
+package com.jerry.assessment.screen.community.components.settleRemind
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.SubcomposeAsyncImage
+import com.jerry.assessment.composes.text.TextWithStyle
+import com.jerry.assessment.composes.text.textMultiStyle
+
+
+@Composable
+private fun keyWordStyle(): TextStyle {
+    return MaterialTheme.typography.titleMedium.copy(
+        //fontFamily = FontFamily(Font(Res.font.Poppins_Regular)),
+        lineHeight = 16.sp,
+        fontWeight = FontWeight(700),
+        fontSize = 12.sp,
+        color = MaterialTheme.colorScheme.primary,
+    )
+}
+
+
+@Composable
+fun normalWordStyle(): TextStyle  {
+    return MaterialTheme.typography.titleMedium.copy(
+        //fontFamily = FontFamily(Font(Res.font.Inter)),
+        lineHeight = 16.sp,
+        fontWeight = FontWeight(400),
+        fontSize = 12.sp,
+        color = MaterialTheme.colorScheme.primary,
+    )
+}
+
+@Composable
+private fun NameText(name: String){
+    Text(
+        text = name,
+        fontSize = 14.sp,
+        //fontFamily = FontFamily(Font(Res.font.Poppins_Regular)),
+        color = Color(0XFF69718A),
+        lineHeight = 20.sp,
+        fontWeight = FontWeight(400)
+    )
+}
+
+@Composable
+private fun AmountText(isSettle: Boolean = true, amount: String){
+    val normalText = if (isSettle) "You owe " else "Owes you"
+    Text(
+        text = textMultiStyle(
+            originalText = "$normalText ${amount}",
+            customTextList = listOf(
+                TextWithStyle(
+                    customText = amount,
+                    style = keyWordStyle()
+                ),
+                TextWithStyle(
+                    customText = normalText,
+                    style = normalWordStyle()
+                ),
+            )
+        )
+    )
+}
+
+@Composable
+fun SettleRemindItem(
+    imageUrl: String = "https://dummyimage.com/100x100/6699cc/000",
+    name: String = "name",
+    amount: String = "$100",
+    isSettle: Boolean = true,
+) {
+    ListItem(
+        leadingContent = {
+            SubcomposeAsyncImage(
+                modifier = Modifier
+                    .size(45.dp)
+                    .clip(CircleShape),
+                model = imageUrl,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                loading = {
+                    CircularProgressIndicator()
+                },
+            )
+        },
+        headlineContent = {
+            if (isSettle){
+                NameText(name)
+            } else {
+                AmountText(amount = "$100", isSettle = isSettle)
+            }
+        },
+        supportingContent = {
+            if (isSettle){
+                AmountText(amount = "$100", isSettle = isSettle)
+            } else {
+                NameText(name)
+            }
+        },
+        trailingContent = {
+            OutlinedButton(
+                onClick = {},
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                ),
+                shape = MaterialTheme.shapes.small
+            ) {
+                Text(
+                    text = if (isSettle) "Settle" else "Remind",
+                    fontSize = 12.sp,
+                    //fontFamily = FontFamily(Font(Res.font.Poppins_Regular)),
+                    color = MaterialTheme.colorScheme.primary,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight(400)
+                )
+            }
+        }
+    )
+}
+
+@Preview
+@Composable
+private fun SettleItemPreview(){
+    SettleRemindItem(
+        isSettle = true
+    )
+}
+
+@Preview
+@Composable
+private fun RemindItemPreview(){
+    SettleRemindItem(
+        isSettle = false
+    )
+}

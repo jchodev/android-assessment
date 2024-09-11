@@ -9,9 +9,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -23,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.jerry.assessment.composes.icon.RoundedCardIcon
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,11 +44,7 @@ fun MyTopBar(
             containerColor = Color.Transparent
         ),
         title = {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     modifier = Modifier.offset(y = (-2).dp),
                     text = title,
@@ -70,6 +72,38 @@ fun MyTopBar(
                     )
                 }
             }
+//            Column(
+//                modifier = Modifier.fillMaxSize(),
+//                verticalArrangement = Arrangement.Center,
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ){
+//                Text(
+//                    modifier = Modifier.offset(y = (-2).dp),
+//                    text = title,
+//                    style = MaterialTheme.typography.titleMedium.copy(
+//                        fontSize = 20.sp,
+//                        //fontFamily = FontFamily(Font(Res.font.Poppins_Regular)),
+//                        textAlign = TextAlign.Center,
+//                        color = Color(0XFF1E1E1E),
+//                        lineHeight = 28.sp,
+//                        fontWeight = FontWeight(400)
+//                    )
+//                )
+//                subTitle?.let {
+//                    Text(
+//                        modifier = Modifier.offset(y = (-2).dp),
+//                        text = it,
+//                        style = MaterialTheme.typography.titleMedium.copy(
+//                            fontSize = 14.sp,
+//                            //fontFamily = FontFamily(Font(Res.font.Poppins_Regular)),
+//                            textAlign = TextAlign.Center,
+//                            color = Color(0XFF1E1E1E),
+//                            lineHeight = 20.sp,
+//                            fontWeight = FontWeight(400)
+//                        )
+//                    )
+//                }
+//            }
         },
         navigationIcon = navigationIcon,
         actions = actions
@@ -78,17 +112,30 @@ fun MyTopBar(
 
 @Preview
 @Composable
-private fun FluckTopBarTitleOnlyPreview(){
+private fun TopBarTitleOnlyPreview(){
 
     MyTopBar(
-            title = "title"
-        )
-
+        title = "this is tilte",
+        navigationIcon = {
+            RoundedCardIcon(
+                onClick = {  },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            )
+        },
+        actions = {}
+    )
 }
 
 @Preview
 @Composable
-private fun FluckTopBarTitleSubTitlePreview(){
+private fun TopBarTitleSubTitlePreview(){
     MyTopBar(
         title = "title",
         subTitle = "this is sub title"
