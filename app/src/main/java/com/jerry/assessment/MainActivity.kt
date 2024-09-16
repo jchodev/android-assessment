@@ -3,6 +3,7 @@ package com.jerry.assessment
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,19 +11,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
-import com.jerry.assessment.screen.community.components.settleRemind.SettingRemindBottomSheet
-import com.jerry.assessment.ui.theme.AssessmentprojectTheme
+import com.jerry.assessment.screen.community.components.yourGroups.CreateGroupBottomSheet
+import com.jerry.assessment.screen.community.components.yourGroups.CreateGroupViewModel
+import com.jerry.assessment.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<CreateGroupViewModel>()
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,18 +42,21 @@ class MainActivity : ComponentActivity() {
             var text by remember { mutableStateOf("Hello") }
 
             if (showSheet) {
-                /*
-                    showSheet: Boolean,
-    onDismissRequest: () -> Unit,
-    title: String = "Settle",
-                 */
-                SettingRemindBottomSheet(
+                CreateGroupBottomSheet(
+                    viewModel = viewModel,
                     showSheet = showSheet,
-                    onDismissRequest = {
-                        showSheet = false
-                    }
-
+                    onDismissRequest = { showSheet = false },
                 )
+
+//                val items: MutableList<SettleItemData> = mutableListOf()
+//                for (i in 1..100) {
+//                    items.add(SettleItemData())
+//                }
+//                SettingRemindBottomSheet(
+//                    showSheet = showSheet,
+//                    onDismissRequest = { showSheet = false },
+//                    items = items
+//                )
             }
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
@@ -55,6 +66,7 @@ class MainActivity : ComponentActivity() {
                     .padding(paddingValues)
                     .fillMaxWidth()) {
                     Button(onClick = {
+                        viewModel.fetchContact()
                         showSheet = true
                     }) {
                         Text(text = "Show BottomSheet")
@@ -79,7 +91,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    AssessmentprojectTheme {
+    AppTheme {
         Greeting("Android")
     }
 }

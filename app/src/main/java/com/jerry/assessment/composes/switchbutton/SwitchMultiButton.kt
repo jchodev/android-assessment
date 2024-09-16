@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jerry.assessment.ui.theme.AssessmentprojectTheme
+import com.jerry.assessment.ui.theme.AppTheme
 
 
 @Composable
@@ -93,7 +93,7 @@ data class ButtonData(
 @Preview
 @Composable
 private fun Screen2ContentPreview() {
-    AssessmentprojectTheme {
+    AppTheme {
         var selectedIndex by remember { mutableStateOf(0) }
 
         val buttons = listOf(

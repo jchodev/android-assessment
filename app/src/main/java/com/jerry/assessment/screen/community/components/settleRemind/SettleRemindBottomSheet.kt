@@ -1,13 +1,24 @@
 package com.jerry.assessment.screen.community.components.settleRemind
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,15 +34,18 @@ import com.jerry.assessment.composes.topbar.MyTopBar
 fun SettingRemindBottomSheet(
     showSheet: Boolean,
     onDismissRequest: () -> Unit,
-    title: String = "Settle",
+    isSettle: Boolean = true,
+    items: List<SettleItemData> = emptyList(),
 ) {
-    BetterModalLazyColumnBottomSheet(
+    val title = if (isSettle) "Settle" else "Remind"
+    BetterModalBottomSheet(
         showSheet = showSheet,
         onDismissRequest = onDismissRequest,
-        sheetState = rememberStandardBottomSheetState(
-            initialValue = SheetValue.Expanded
-        ),
-        topBar = {
+        sheetState = rememberModalBottomSheetState(),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             MyTopBar(
                 title = title,
                 navigationIcon = {
@@ -49,30 +63,23 @@ fun SettingRemindBottomSheet(
                 },
                 actions = {}
             )
-        },
-        content = {
-            items(100) { index ->
-                Text("Item $index")
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(items) { item ->
+                    SettleRemindItem(data = item)
+                }
             }
+
         }
-    )
+    }
 
 }
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun SettleRemindBottomSheetPreview(){
-    BetterModalBottomSheet(
-        showSheet = true,
-        onDismissRequest = {},
-        sheetState = rememberStandardBottomSheetState(
-            initialValue = SheetValue.Expanded
-        ),
-        content = {
-            Text("tus us aaaa")
-        }
-    )
 
     BetterModalLazyColumnBottomSheet(
         sheetState = rememberStandardBottomSheetState(
@@ -82,7 +89,7 @@ private fun SettleRemindBottomSheetPreview(){
         onDismissRequest =  {},
         topBar = {
             MyTopBar(
-                title = "this is tilte",
+                title = "this is title",
                 navigationIcon = {
                     RoundedCardIcon(
                         onClick = {  },
@@ -103,6 +110,16 @@ private fun SettleRemindBottomSheetPreview(){
             items(100) { index ->
                 Text("Item $index")
             }
+        },
+        bottomBar = {
+            Text (text =  "this is bottom bar")
         }
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun SettleRemindBottomSheetPreview2(){
+
 }

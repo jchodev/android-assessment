@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jerry.assessment.R
+import com.jerry.assessment.composes.background.CommonBackground
 import com.jerry.assessment.composes.button.DoubleBorderIconButton
 import com.jerry.assessment.composes.card.CommonCardContainer
 import com.jerry.assessment.composes.icon.RoundedCardIcon
@@ -222,12 +223,6 @@ fun CommunityOverview(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CommunityScreen() {
-    val gradientColors = Brush.linearGradient(
-        colors = listOf(
-            Color(0XFFF0F0FE),
-            Color(0XFFFFFFFF)
-        )
-    )
 
     val buttons = listOf(
         ButtonData("Overview") { },
@@ -236,19 +231,13 @@ fun CommunityScreen() {
     var selectedIndex by remember { mutableStateOf(0) }
 
 
-    Box(modifier = Modifier.background(gradientColors)) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.bg),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-
+    CommonBackground {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 CommunityScreenTopBar()
-            }
+            },
+            containerColor = Color.Transparent
         ) { paddingValues ->
             Column ( modifier = Modifier
                 .padding(paddingValues)
@@ -277,6 +266,7 @@ fun CommunityScreen() {
             }
         }
     }
+
 }
 
 

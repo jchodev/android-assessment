@@ -13,6 +13,13 @@ koltinx-datetime = "0.6.1"
 constraintlayout-compose = "1.0.1"
 compose-material = "1.2.0-beta01"
 
+
+# hilt
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "google-hilt" }
+hilt-dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "google-hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "google-hilt" }
+
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

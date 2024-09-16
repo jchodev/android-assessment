@@ -81,6 +81,7 @@ fun BetterModalLazyColumnBottomSheet(
     dragHandle: @Composable (() -> Unit)? = { BottomSheetDefaults.DragHandle() },
     windowInsets: WindowInsets = WindowInsets.displayCutout,
     topBar: (@Composable () -> Unit)? = null,
+    bottomBar: (@Composable () -> Unit)? = null,
     content: LazyListScope.() -> Unit
 ) {
     val bottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
@@ -100,14 +101,17 @@ fun BetterModalLazyColumnBottomSheet(
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 topBar?.let {
-                    topBar()
+                    it()
                 }
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .weight(1f)
                         .padding(bottom = bottomPadding)
                 ) {
                     content()
+                }
+                bottomBar?.let {
+                    it()
                 }
             }
         }

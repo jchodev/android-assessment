@@ -80,10 +80,11 @@ private fun AmountText(isSettle: Boolean = true, amount: String){
 
 @Composable
 fun SettleRemindItem(
-    imageUrl: String = "https://dummyimage.com/100x100/6699cc/000",
-    name: String = "name",
-    amount: String = "$100",
-    isSettle: Boolean = true,
+    data: SettleItemData,
+//    imageUrl: String = "https://dummyimage.com/100x100/6699cc/000",
+//    name: String = "name",
+//    amount: String = "$100",
+//    isSettle: Boolean = true,
 ) {
     ListItem(
         leadingContent = {
@@ -91,7 +92,7 @@ fun SettleRemindItem(
                 modifier = Modifier
                     .size(45.dp)
                     .clip(CircleShape),
-                model = imageUrl,
+                model = data.imageUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 loading = {
@@ -100,17 +101,17 @@ fun SettleRemindItem(
             )
         },
         headlineContent = {
-            if (isSettle){
-                NameText(name)
+            if (data.isSettle){
+                NameText(data.name)
             } else {
-                AmountText(amount = "$100", isSettle = isSettle)
+                AmountText(amount = data.amount, isSettle = data.isSettle)
             }
         },
         supportingContent = {
-            if (isSettle){
-                AmountText(amount = "$100", isSettle = isSettle)
+            if (data.isSettle){
+                AmountText(amount = data.amount, isSettle = data.isSettle)
             } else {
-                NameText(name)
+                NameText(data.name)
             }
         },
         trailingContent = {
@@ -123,7 +124,7 @@ fun SettleRemindItem(
                 shape = MaterialTheme.shapes.small
             ) {
                 Text(
-                    text = if (isSettle) "Settle" else "Remind",
+                    text = if (data.isSettle) "Settle" else "Remind",
                     fontSize = 12.sp,
                     //fontFamily = FontFamily(Font(Res.font.Poppins_Regular)),
                     color = MaterialTheme.colorScheme.primary,
@@ -139,7 +140,9 @@ fun SettleRemindItem(
 @Composable
 private fun SettleItemPreview(){
     SettleRemindItem(
-        isSettle = true
+        data = SettleItemData(
+            isSettle = true
+        )
     )
 }
 
@@ -147,6 +150,15 @@ private fun SettleItemPreview(){
 @Composable
 private fun RemindItemPreview(){
     SettleRemindItem(
-        isSettle = false
+        data = SettleItemData(
+            isSettle = false
+        )
     )
 }
+
+data class SettleItemData(
+    val imageUrl: String = "https://dummyimage.com/100x100/6699cc/000",
+    val name: String = "name",
+    val amount: String = "$100",
+    val isSettle: Boolean = true,
+)
