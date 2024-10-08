@@ -34,10 +34,7 @@ import com.jerry.assessment.composes.card.DoubleBoarderCard
 @Composable
 fun PlanCard(
     modifier: Modifier = Modifier,
-    day: String,
-    month: String,
-    title: String,
-    timePeriod: String,
+    item: PlanCardData,
 ) {
 
     DoubleBoarderCard {
@@ -68,14 +65,14 @@ fun PlanCard(
                     .background(color = Color.White)
                     .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
-                    Text(day, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                    Text(month, color = Color.Gray)
+                    Text(item.day, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    Text(item.month, color = Color.Gray)
                 }
 
             }
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(title, fontSize = 14.sp)
+                Text(item.title, fontSize = 14.sp)
 
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
@@ -87,31 +84,42 @@ fun PlanCard(
                         tint = Color.Gray
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(timePeriod, color = Color.Gray)
+                    Text(item.timePeriod, color = Color.Gray)
                 }
             }
             Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.width(8.dp))
             AvatarGroup(
-                avatars = listOf(
-                    "https://dummyimage.com/100x100/6699cc/000",
-                    "https://dummyimage.com/100x100/6699cc/000",
-                    "https://dummyimage.com/100x100/6699cc/000",
-                    "https://dummyimage.com/100x100/6699cc/000",
-                    "https://dummyimage.com/100x100/6699cc/000",
-
-                )
+                avatars = item.avatars
             )
         }
     }
 }
 
+data class PlanCardData(
+    val day: String,
+    val month: String,
+    val title: String,
+    val timePeriod: String,
+    val avatars: List<String>
+)
+
 @Preview
 @Composable
 private fun PlanCard(){
     PlanCard(
-        day = "23",
-        month = "Jan",
-        title = "Trip to London",
-        timePeriod = "12:00 - 16:00"
+        item = PlanCardData(
+            day = "23",
+            month = "Jan",
+            title = "Trip to London",
+            timePeriod = "12:00 - 16:00",
+            avatars = listOf(
+                "https://dummyimage.com/100x100/6699cc/000",
+                "https://dummyimage.com/100x100/6699cc/000",
+                "https://dummyimage.com/100x100/6699cc/000",
+                "https://dummyimage.com/100x100/6699cc/000",
+                "https://dummyimage.com/100x100/6699cc/000",
+            )
+        ),
     )
 }

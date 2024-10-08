@@ -31,9 +31,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.jerry.assessment.R
 import com.jerry.assessment.composes.avatar.AvatarGroup
+import kotlinx.datetime.DateTimePeriod
 
 @Composable
-fun MoneyRequestItem() {
+fun MoneyRequestItem(
+    item : CommunityRequestMoney,
+) {
     DoubleBoarderCard {
         Row(
             modifier = Modifier
@@ -69,34 +72,36 @@ fun MoneyRequestItem() {
                 modifier = Modifier.weight(1f)
             ){
                 Text(
-                    text = "Walter Kozey",
+                    text = item.title,
                     //fontFamily = FontFamily(Font(Res.font.Inter)),
                     lineHeight = 15.sp,
                     fontWeight = FontWeight(400),
                     fontSize = 12.sp,
                 )
                 Text(
-                    text = "Food and Drinks",
+                    text = item.subTitle,
                     //fontFamily = FontFamily(Font(Res.font.Inter)),
                     lineHeight = 15.sp,
                     fontWeight = FontWeight(300),
                     fontSize = 10.sp,
                 )
                 Text(
-                    text = "$50.00",
+                    text = "$"+item.amount,
                     //fontFamily = FontFamily(Font(Res.font.Inter)),
                     lineHeight = 18.sp,
                     fontWeight = FontWeight(400),
                     fontSize = 14.sp,
                 )
             }
-            RequestItemTail()
+            RequestItemTail(text = item.dateTime)
         }
     }
 }
 
 @Composable
-fun EventRequestItem() {
+fun EventRequestItem(
+    event: CommunityRequestEvent
+) {
     DoubleBoarderCard {
         Row(
             modifier = Modifier
@@ -117,14 +122,14 @@ fun EventRequestItem() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "32",
+                    text = event.day,
                     //fontFamily = FontFamily(Font(Res.font.Inter)),
                     lineHeight = 21.sp,
                     fontWeight = FontWeight(600),
                     fontSize = 14.sp,
                 )
                 Text(
-                    text = "Sat",
+                    text = event.weekOfDate,
                     //fontFamily = FontFamily(Font(Res.font.Inter)),
                     lineHeight = 18.sp,
                     fontWeight = FontWeight(300),
@@ -141,7 +146,7 @@ fun EventRequestItem() {
                 //horizontalArrangement = Arrangement.Center
             ){
                 Column {
-                    Text("trip to london", fontSize = 14.sp)
+                    Text(event.title, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(
                         verticalAlignment = Alignment.CenterVertically
@@ -152,7 +157,7 @@ fun EventRequestItem() {
                             tint = Color.Gray
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("12:00 - 16:00", color = Color.Gray)
+                        Text(event.timePeriod, color = Color.Gray)
                     }
                 }
                 Spacer(modifier = Modifier.width(8.dp))
@@ -166,7 +171,7 @@ fun EventRequestItem() {
                     )
                 )
             }
-            RequestItemTail()
+            RequestItemTail(event.dateTime)
         }
     }
 }
@@ -174,11 +179,47 @@ fun EventRequestItem() {
 @Preview
 @Composable
 private fun MoneyRequestItemPreview(){
-    MoneyRequestItem()
+    MoneyRequestItem(
+        CommunityRequestMoney(
+            title = "thos is title",
+            subTitle = "this is sub title",
+            amount = "50.00",
+            dateTime = "12 Fev 2024"
+        )
+    )
 }
 
 @Preview
 @Composable
 private fun EventRequestItemPreview(){
-    EventRequestItem()
+    EventRequestItem(
+        event = CommunityRequestEvent(
+            title = "this is title",
+            timePeriod = "12.00 - 16.00",
+            day = "23",
+            weekOfDate = "Sat",
+            dateTime = "12 Feb 2024"
+        )
+    )
 }
+
+data class CommunityRequestItemData(
+    val event: CommunityRequestEvent? = null,
+    val money: CommunityRequestMoney? = null,
+)
+
+data class CommunityRequestEvent(
+    val title: String,
+    val timePeriod: String,
+    val day: String,
+    val weekOfDate: String,
+    val dateTime: String,
+)
+
+data class CommunityRequestMoney (
+    val title: String,
+    val subTitle: String,
+    val amount: String,
+    val dateTime: String,
+)
+

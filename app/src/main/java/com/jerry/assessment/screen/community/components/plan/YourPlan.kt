@@ -11,12 +11,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,15 +33,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jerry.assessment.composes.CalendarLazyRow
 import com.jerry.assessment.composes.card.CommonCardContainer
 import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 @Composable
-fun YourPlan() {
+fun YourPlan(
+    onSelectedDate: (LocalDate) -> Unit = {},
+    planCardDatas: List<PlanCardData>,
+) {
 
     val now = Clock.System.now()
     val tz = TimeZone.currentSystemDefault()
@@ -47,30 +56,33 @@ fun YourPlan() {
     var selectedDay by remember { mutableStateOf(today) }
 
    CommonCardContainer {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
             //row
             Row( modifier = Modifier.fillMaxWidth()){
-                Text(Month(selectedDay.monthNumber).toString() + " " + selectedDay.year, fontWeight = FontWeight.Medium)
+                //Text(Month(selectedDay.monthNumber).toString() + " " + selectedDay.year, fontWeight = FontWeight.Medium)
+                Text(
+                    text = "Your Plan",
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight(400),
+                    //fontFamily = Poppins
+                )
                 Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    onClick = { /* TODO */ },
-                    shape = CircleShape,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF1EBFE))
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "New",
-                        tint = Color(0xFF7539F5)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text("New", color = Color(0xFF7539F5))
-                }
+                Text(
+                    text = Month(selectedDay.monthNumber).toString() + " " + selectedDay.year,
+                    fontSize = 12.sp,
+                    lineHeight = 20.sp,
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF686675)
+                    //fontFamily = Inter
+                )
             }
             Spacer(modifier = Modifier.height(8.dp))
             CalendarLazyRow(
                 today = today,
                 onScrolledDay = {
                     selectedDay = it
+                    onSelectedDate.invoke(it)
                 }
             )
             //upcoming plan
@@ -97,30 +109,15 @@ fun YourPlan() {
             }
             //upcoming plan card
             LazyRow {
-                item {
+                itemsIndexed(items = planCardDatas) { index, item ->
                     PlanCard(
-                        modifier = Modifier.width(320.dp),
-                        day = "23",
-                        month = "Jan",
-                        title = "Trip to London",
-                        timePeriod = "12:00 - 16:00"
+                        item = item,
                     )
-                }
-                item {
-                    Spacer(modifier = Modifier.width(8.dp))
-                }
-                item {
-                    PlanCard(
-                        day = "23",
-                        month = "Jan",
-                        title = "Trip to London",
-                        timePeriod = "12:00 - 16:00"
-                    )
+                    if (index < planCardDatas.size - 1) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
                 }
             }
-
-
-
         }
     }
 }
@@ -132,6 +129,35 @@ private fun YourPlanPreview(){
         .background(Color.Gray)
         .padding(16.dp))
     {
-        YourPlan()
+        YourPlan(
+            planCardDatas = listOf(
+                PlanCardData(
+                    day = "23",
+                    month = "Jan",
+                    title = "Trip to London",
+                    timePeriod = "12:00 - 16:00",
+                    avatars = listOf(
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                    )
+                ),
+                PlanCardData(
+                    day = "23",
+                    month = "Jan",
+                    title = "Trip to London",
+                    timePeriod = "12:00 - 16:00",
+                    avatars = listOf(
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                        "https://dummyimage.com/100x100/6699cc/000",
+                    )
+                )
+            )
+        )
     }
 }

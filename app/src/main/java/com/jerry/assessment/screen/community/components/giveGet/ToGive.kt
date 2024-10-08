@@ -22,22 +22,25 @@ import com.jerry.assessment.R
 import com.jerry.assessment.composes.avatar.AvatarGroup
 import com.jerry.assessment.composes.button.DoubleBorderIconButton
 import com.jerry.assessment.composes.card.DoubleBoarderCard
+import com.jerry.assessment.composes.ext.visible
 
 @Composable
 fun ToGive(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    amount: String,
 ) {
     DoubleBoarderCard(
         modifier = modifier,
         content = {
-            ToGiveContent()
+            ToGiveContent(amount = amount)
         }
     )
 }
 
 @Composable
 fun ToGiveContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    amount: String,
 ) {
     ConstraintLayout(
         modifier = modifier.fillMaxWidth().background(
@@ -48,7 +51,7 @@ fun ToGiveContent(
 
         Text(
             modifier = Modifier
-                .padding(start = 36.dp, top = 16.dp)
+                .padding(start = 16.dp, top = 16.dp)
                 .constrainAs(title) {},
             text = "To Give",
             lineHeight = 24.sp,
@@ -77,9 +80,9 @@ fun ToGiveContent(
             modifier = Modifier
                 .constrainAs(moneyText){
                     top.linkTo(title.bottom, 8.dp)
-                    start.linkTo(parent.start , 8.dp)
+                    start.linkTo(parent.start , 16.dp)
                 },
-            text = "$500.23",
+            text = "$$amount",
             lineHeight = 28.sp,
             fontWeight = FontWeight(400),
             fontSize = 20.sp,
@@ -90,7 +93,7 @@ fun ToGiveContent(
             modifier = Modifier
                 .constrainAs(avatarGroup){
                     top.linkTo(moneyText.bottom, 8.dp)
-                    start.linkTo(parent.start , 8.dp)
+                    start.linkTo(parent.start , 16.dp)
                 },
             avatars = listOf(
                 "https://dummyimage.com/100x100/6699cc/000",
@@ -102,6 +105,7 @@ fun ToGiveContent(
 
         Text(
             modifier = Modifier
+                .visible(false)
                 .constrainAs(viewText) {
                     start.linkTo(avatarGroup.end, 8.dp)
                     bottom.linkTo(avatarGroup.bottom)
@@ -130,11 +134,11 @@ fun ToGiveContent(
 @Preview
 @Composable
 private fun ToGivePreview(){
-    ToGive()
+    ToGive(amount = "400.53")
 }
 
 @Preview
 @Composable
 private fun ToGiveContentPreview(){
-    ToGiveContent()
+    ToGiveContent(amount = "400.53")
 }

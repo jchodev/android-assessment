@@ -23,22 +23,25 @@ import com.jerry.assessment.composes.avatar.AvatarGroup
 import com.jerry.assessment.composes.avatar.AvatarGroup2
 import com.jerry.assessment.composes.button.DoubleBorderIconButton
 import com.jerry.assessment.composes.card.DoubleBoarderCard
+import com.jerry.assessment.composes.ext.visible
 
 @Composable
 fun ToGet(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    amount: String,
 ) {
     DoubleBoarderCard(
         modifier = modifier,
         content = {
-            ToGetContent()
+            ToGetContent(amount = amount)
         }
     )
 }
 
 @Composable
 fun ToGetContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    amount: String
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -84,7 +87,7 @@ fun ToGetContent(
                     end.linkTo(parent.end, 16.dp)
                     top.linkTo(title.bottom, 8.dp)
                 },
-            text = "$500.23",
+            text = "$$amount",
             lineHeight = 28.sp,
             fontWeight = FontWeight(400),
             fontSize = 20.sp,
@@ -107,6 +110,7 @@ fun ToGetContent(
 
         Text(
             modifier = Modifier
+                .visible(false)
                 .constrainAs(viewText) {
                     end.linkTo(avatarGroup.start, 8.dp)
                     bottom.linkTo(avatarGroup.bottom)
@@ -137,11 +141,11 @@ fun ToGetContent(
 @Preview
 @Composable
 private fun ToGetPreview(){
-    ToGet()
+    ToGet(amount = "500.24")
 }
 
 @Preview
 @Composable
 private fun ToGetContentPreview(){
-    ToGetContent()
+    ToGetContent(amount = "500.24")
 }
