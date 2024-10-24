@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.SubcomposeAsyncImage
+import com.jerry.assessment.composes.button.CommonOutlineButton
 import com.jerry.assessment.composes.text.TextWithStyle
 import com.jerry.assessment.composes.text.textMultiStyle
 
@@ -81,6 +82,7 @@ private fun AmountText(isSettle: Boolean = true, amount: String){
 @Composable
 fun SettleRemindItem(
     data: SettleItemData,
+    showTail:Boolean = true,
 //    imageUrl: String = "https://dummyimage.com/100x100/6699cc/000",
 //    name: String = "name",
 //    amount: String = "$100",
@@ -115,21 +117,10 @@ fun SettleRemindItem(
             }
         },
         trailingContent = {
-            OutlinedButton(
-                onClick = {},
-                border = BorderStroke(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.primary,
-                ),
-                shape = MaterialTheme.shapes.small
-            ) {
-                Text(
+            if (showTail) {
+                CommonOutlineButton(
                     text = if (data.isSettle) "Settle" else "Remind",
-                    fontSize = 12.sp,
-                    //fontFamily = FontFamily(Font(Res.font.Poppins_Regular)),
-                    color = MaterialTheme.colorScheme.primary,
-                    lineHeight = 20.sp,
-                    fontWeight = FontWeight(400)
+                    onClick = {}
                 )
             }
         }

@@ -4,7 +4,11 @@ package com.jerry.assessment.screen.community
 import androidx.compose.foundation.layout.fillMaxSize
 
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 
@@ -67,7 +71,23 @@ fun CommunityScreen(){
             topBar = {
                 CommunityScreenTopBar()
             },
-            containerColor = Color.Transparent
+            containerColor = Color.Transparent,
+            floatingActionButton = {
+                FilledIconButton(
+                    modifier = Modifier.size(60.dp),
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ),
+                    onClick = {  }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Add",
+                        modifier = Modifier.size(16.dp),
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }
         ) { paddingValues ->
             CommunityOverview(
                 paddingValues = paddingValues,
